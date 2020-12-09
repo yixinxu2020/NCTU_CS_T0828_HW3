@@ -51,14 +51,10 @@ $ pip install -r requirements.txt
 ```
 ### Model architecture(Callbacks, Optimizer, Regularizer)
 You can set them in **coco.py** or **model.py(recommend)**
-### Create dataset.yaml
+### Train models
+To train models, run following commands.
 ```
-train: ../digit/images/train/
-val: ../digit/images/val/
-
-nc: 10
-
-names: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+$ python coco.py train --dataset coco.py --model imagenet
 ```
 ### Model architecture
 YOLOv5 has s series of models from s to x, we can train models by specifying dataset, batch-size, image size and either pretrained --weights yolov5s.pt (recommended), or randomly initialized --weights '' --cfg yolov5s.yaml (not recommended). Pretrained weights are auto-downloaded from the latest YOLOv5 release.
@@ -67,70 +63,16 @@ To train models, run following commands.
 ```
 $ python3 train.py --img 416 --epochs 50 --data digitdata.yaml --weights yolov5l.pt --batch 32
 ```
-### Hyperparameters
-YOLOv5 has about 25 hyperparameters used for various training settings. These are defined in yaml files in the /data directory. Better initial guesses will produce better final results, so it is important to initialize these values properly before evolving. If in doubt, simply use the default values, which are optimized for YOLOv5 COCO training from scratch.
-```
- lr0: 0.01  # initial learning rate (SGD=1E-2, Adam=1E-3) 
- lrf: 0.2  # final OneCycleLR learning rate (lr0 * lrf) 
- momentum: 0.937  # SGD momentum/Adam beta1 
- weight_decay: 0.0005  # optimizer weight decay 5e-4 
- warmup_epochs: 3.0  # warmup epochs (fractions ok) 
- warmup_momentum: 0.8  # warmup initial momentum 
- warmup_bias_lr: 0.1  # warmup initial bias lr 
- giou: 0.05  # box loss gain 
- cls: 0.5  # cls loss gain 
- cls_pw: 1.0  # cls BCELoss positive_weight 
- obj: 1.0  # obj loss gain (scale with pixels) 
- obj_pw: 1.0  # obj BCELoss positive_weight 
- iou_t: 0.20  # IoU training threshold 
- anchor_t: 4.0  # anchor-multiple threshold 
- # anchors: 0  # anchors per output grid (0 to ignore) 
- fl_gamma: 0.0  # focal loss gamma (efficientDet default gamma=1.5) 
- hsv_h: 0.015  # image HSV-Hue augmentation (fraction) 
- hsv_s: 0.7  # image HSV-Saturation augmentation (fraction) 
- hsv_v: 0.4  # image HSV-Value augmentation (fraction) 
- degrees: 0.0  # image rotation (+/- deg) 
- translate: 0.1  # image translation (+/- fraction) 
- scale: 0.5  # image scale (+/- gain) 
- shear: 0.0  # image shear (+/- deg) 
- perspective: 0.0  # image perspective (+/- fraction), range 0-0.001 
- flipud: 0.0  # image flip up-down (probability) 
- fliplr: 0.5  # image flip left-right (probability) 
- mosaic: 1.0  # image mosaic (probability) 
- mixup: 0.0  # image mixup (probability) 
- ```
-### Plot the training_result
-**Weights & Biases** (W&B) is now integrated with YOLOv5 for real-time visualization and cloud logging of training runs. This allows for better run comparison and introspection, as well improved visibility and collaboration among team members. To enable W&B logging install wandb, and then train normally (you will be guided setup on first use).
-```
-$ pip install wandb
-```
+### Pretrained models
+Only can use **ImageNet** pretrained model for the fairness.
+### Training weights
+The training weights are saved in **logs** directory.
 ## Testing
-### Creat testyolo.yaml
-Creating testyolo.yaml to get the test datasets.
-```
-train: /home/div/cv/hw2/yolov5/digit/images/train/
-val: /home/div/cv/hw2/yolov5/digit/images/val/
-test: /home/div/cv/hw2/data/test/
-nc: 10
-
-names: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-```
 ### Test model
-Using the trained model to pred the testing_data.
+Using the **demo.py** to test your trained model.
 ```
-$  python3 test.py --weight best.pt --data testyolov.yaml --img 416 --augment --task test --save-json
+$ python3 demo.py
 ```
-### Transform the test result
-Transform the test result to suitable .json format.
-```
-$ python3 tranjson.py
-```
-result.json
-```
-[dict1, dict2, ..., dict13068]
-dict{“bbox”: list of bounding boxes in (y1, x1, y2, x2). (top,left,right,bottom)
-     “score”: list of probability for the class
-     “label”: list of label}
-```
+You will get a test_result json file.
 ## Submission
 Submit the test_result json file, get the score.
