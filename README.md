@@ -20,9 +20,9 @@ After transform, the structure becomes like this:
 |  +- samples
 |    +- coco 
 |      +- pascal
-|      +- annotations
-|      +- train2017
-|      +- val2017
+|        +- annotations
+|        +- train2017
+|        +- val2017
 |      coco.py
 |    demo.py
 |  +- mrcnn
