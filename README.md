@@ -17,25 +17,25 @@ I used data downloaded from TA’s drive containing 1,349 training data and 100 
 After transform, the structure becomes like this:
 ```
 +- hw3
-|	+- samples
-|		+- coco 
-|		 	+- pascal
-|				+- annotations
-|				+- train2017
-|				+- val2017
-|			coco.py
-|		demo.py
-|	+- mrcnn
-|		+- _pycache_
-|		__init__.py 
-|		config.py
-|		model.py  	 
-|		parallel_model.py
-|		utils.py
-|		visualize.py
-|	README.md
-|	requirements.txt
-|	setup.py
+| +- samples
+|  +- coco 
+|	   +- pascal
+|	   +- annotations
+|	   +- train2017
+|	   +- val2017
+|    coco.py
+|  demo.py
+| +- mrcnn
+|  +- _pycache_
+|  __init__.py 
+|  config.py
+|  model.py  	 
+|  parallel_model.py
+|  utils.py
+|  visualize.py
+| README.md
+| requirements.txt
+| setup.py
 ```
 
 ## Training
