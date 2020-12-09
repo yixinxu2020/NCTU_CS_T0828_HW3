@@ -39,13 +39,18 @@ After transform, the structure becomes like this:
 ```
 
 ## Training
+You can set the config in **coco.py** (class CoCoConfig). The config template is in **mrcnn/config.py**.
 ### Configure the environment
-Clone this repo, download tutorial dataset, and install requirements.txt dependencies, including Python>=3.8 and PyTorch>=1.7.
+All requirements should be detailed in requirements.txt. Using Anaconda is strongly recommended.
+
+I used cuda 10.0 with tensorflow-gpu==1.14 and keras==2.2.5
 ```
-$ git clone https://github.com/ultralytics/yolov5  # clone repo
-$ cd yolov5
-$ pip install -r requirements.txt  # install dependencies
+$ conda create -n mrnn python=3.6
+$ source activate mrnn
+$ pip install -r requirements.txt
 ```
+### Model architecture(Callbacks, Optimizer, Regularizer)
+You can set them in **coco.py** or **model.py(recommend)**
 ### Create dataset.yaml
 ```
 train: ../digit/images/train/
