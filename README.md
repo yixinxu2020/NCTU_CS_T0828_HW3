@@ -1,72 +1,42 @@
 # NCTU_CS_T0828_HW3-Instance segmentation
 ## Introduction
-The proposed challenge is a Street View House Numbers images object detection task using the SVHN dataset, which contains 33,402 trianing images, 13,068 test images.
+The proposed challenge is Tiny VOC dataset contains only 1,349 training images, 100 test images with 20 common object classes.
 Train dataset | Test dataset
 ------------ | ------------- |
-33,402 images | 13,068 images
+1.349 images | 100 images
 ## Hardware
 The following specs were used to create the original solution.
 - Ubuntu 16.04 LTS
 - Intel(R) Core(TM) i7-7500U CPU @ 2.90GHz
 - 2x NVIDIA 2080Ti
 ## Data pre-process
-### Get image & bounding box informations
-Firstly, use the **construct_dataset.py** to read the **digitStruct.mat**, get the img_bbox_data.
-```
-$ python3 construct_dataset.py
-```
-And then, use the **getimgdata.py** to get the images width & height, merge w & h with img_bbox_data, get the all image data:
-```
-$ python3 getimgdata.py
-```
-img_name | label | left | top | width | height | right | bottom | img_width | img_height
------------- | ------------- |------------- |------------- |------------- |------------- |------------- |------------- |------------- |------------- |
- | | | | | | | | | | | |
- 
- Next, use the **get_imgtxt.py** and the data from the last step to get the labels informations corresponding to each image, saved as **.txt** format as labels_dataset. 
+I used data downloaded from TA’s drive containing 1,349 training data and 100 testing data. Somehow, I need validation data to train the model but ‘test.json’ has no image id and annotation key. So, I took only 10 training data wich has annotation key as validation data to train faster and set the validation step in config.py. Futher, I fixed the ‘pascal_train.json’ format into coco annotation format. All data conversion processed are in the **jsonconversion.py** file.
  ```
- $ python3 get_imgtxt.py
+ $ jsonconversion.py
  ```
- Because of using yolov5 , before training data, we neen to export the labels to YOLO format, like this:
-- One row per object
-- Each row is class x_center y_center width height format.
-- Box coordinates must be in normalized xywh format (from 0 - 1). If your boxes are in pixels, divide x_center and width by image width, and y_center and height by image height.
-- Class numbers are zero-indexed (start from 0)
+After transform, the structure becomes like this:
 ```
-8       0.4339622641509434      0.5892857142857143      0.07547169811320754     0.4642857142857143
-2       0.5283018867924528      0.5892857142857143      0.11320754716981132     0.4642857142857143
++- hw3
+|	+- samples
+|		+- coco 
+|		 	+- pascal
+|				+- annotations
+|				+- train2017
+|				+- val2017
+|			coco.py
+|		demo.py
+|	+- mrcnn
+|		+- _pycache_
+|		__init__.py 
+|		config.py
+|		model.py  	 
+|		parallel_model.py
+|		utils.py
+|		visualize.py
+|	README.md
+|	requirements.txt
+|	setup.py
 ```
-### Data_classes
-All images are placed in two folders：train & test. 
-
-All labels txt file are placed in one foldr.
-
-In order to observe the effect of our trained model more conveniently, we need to divide the train_dataset into training_dataset and validation_dataset. 
-
-So, firstly, we devide the train_dataset into training_dataset and validation_dataset by **classdataset.py**.
-```
-$ python3 classdataset.py
-```
-After deviding, the training_data becomes like this:
-```
-digit
-+- images
-  +- train 
-    |  image 1
-    |  image 2 ... (total 30061 images)
-  +- val	 	 
-    |  image 1
-    |  image 2 ... (total 3341 images )
-+- labels
-  +- train 
-    |  txt 1
-    |  txt 2 ... (total 30061 images)
-  +- val	 	 
-    |  txt 1
-    |  txt 2 ... (total 3341 images )
-```
-Among them, the ratio of training_dataset to validation_dataset is 9:1.
-
 
 ## Training
 ### Configure the environment
