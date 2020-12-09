@@ -54,14 +54,7 @@ You can set them in **coco.py** or **model.py(recommend)**
 ### Train models
 To train models, run following commands.
 ```
-$ python coco.py train --dataset coco.py --model imagenet
-```
-### Model architecture
-YOLOv5 has s series of models from s to x, we can train models by specifying dataset, batch-size, image size and either pretrained --weights yolov5s.pt (recommended), or randomly initialized --weights '' --cfg yolov5s.yaml (not recommended). Pretrained weights are auto-downloaded from the latest YOLOv5 release.
-### Train models
-To train models, run following commands.
-```
-$ python3 train.py --img 416 --epochs 50 --data digitdata.yaml --weights yolov5l.pt --batch 32
+$ python coco.py train --dataset pascal --model imagenet
 ```
 ### Pretrained models
 Only can use **ImageNet** pretrained model for the fairness.
