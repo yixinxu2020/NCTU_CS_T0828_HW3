@@ -26,7 +26,7 @@ import coco
 MODEL_DIR = os.path.join(ROOT_DIR, "logs")
 
 # Local path to trained weights file
-COCO_MODEL_PATH = os.path.join(ROOT_DIR + '/tranmodel', "mask_rcnn_pascal_0148.h5")
+COCO_MODEL_PATH = os.path.join(ROOT_DIR + '/tranmodel', "mask_rcnn_pascal_0160.h5")
 #85<95<90=100=105
 
 # Download COCO trained weights from Releases if needed
@@ -98,5 +98,5 @@ for imgid in cocoGt.imgs:
             pred['score'] = float(r['scores'][i])
             coco_dt.append(pred)
 
-with open("../logs/0856152_6.json", "w") as f:
+with open("../logs/0856152.json", "w") as f:
     json.dump(coco_dt, f)
