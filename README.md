@@ -36,6 +36,7 @@ After transform, the structure becomes like this:
 |  README.md
 |  requirements.txt
 |  setup.py
+|  jsonconversion.py
 ```
 
 ## Training
